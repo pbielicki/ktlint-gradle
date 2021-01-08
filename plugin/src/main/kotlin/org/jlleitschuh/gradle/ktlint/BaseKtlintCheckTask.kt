@@ -284,10 +284,13 @@ abstract class BaseKtlintCheckTask(
      *
      * **Note**: should be unique per task, otherwise task caching will not work.
      */
-    @get:OutputDirectory
+    @get:Internal
     val reporterOutputDir: DirectoryProperty = objectFactory.directoryProperty().convention(
         project.layout.buildDirectory.dir("reports/ktlint/$name")
     )
+
+    @OutputDirectory
+    open fun getOutputDir() = reporterOutputDir.map { it }
 
     /**
      * Provides all reports outputs map: reporter id to reporter output file.
